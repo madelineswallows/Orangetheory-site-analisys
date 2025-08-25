@@ -42,6 +42,31 @@ The analysis moves from **data collection → cleaning → enrichment → modeli
 
 ---
 
+## 🧮 Scoring Methodology
+Each candidate site was evaluated using a composite score based on two main demographic factors.  
+
+1. **Population Factor**  
+   - Total population within an 8-minute isochrone.  
+   - Normalized using min–max scaling across all sites.  
+
+2. **Household Income Factor**  
+   - Fitness participation increases with income, but not linearly.  
+   - Modeled with a **logistic curve** based on industry benchmarks:  
+     - At $60,000 → ~8% participation  
+     - At $150,000 → ~25% participation  
+   - The logistic function was applied to each site’s **weighted average household income** to generate an estimated participation percentage.  
+
+3. **Final Score**  
+   - Weighted combination of normalized factors:  
+     ```
+     Final Score = (Population * w1) 
+                 + (Income Participation * w2)
+     ```
+   - Example weights: `w1 = 0.5`, `w2 = 0.5` (can be adjusted for sensitivity).  
+   - Scores were then ranked to identify the most promising markets.  
+
+---
+
 ## 📊 Dashboards
 The Tableau dashboards provide:
 - Interactive **map of locations**
